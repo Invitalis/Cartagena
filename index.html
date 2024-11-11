@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Nos vamos a Cartagena!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Playfair Display', serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #87CEEB, #E0FFFF);
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            line-height: 1.4;
+        }
+
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .countdown-item {
+            background: white;
+            padding: 15px 10px;
+            border-radius: 10px;
+            min-width: 80px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .countdown-item span:first-child {
+            display: block;
+            font-size: 2rem;
+            font-weight: 500;
+            color: #4a90e2;
+            margin-bottom: 5px;
+        }
+
+        .countdown-label {
+            font-size: 0.8rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .palm-emoji {
+            font-size: 2rem;
+            margin: 10px 0;
+        }
+
+        .message-box {
+            background: #4a90e2;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 1.2rem;
+            line-height: 1.4;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .countdown-item {
+                min-width: 65px;
+                padding: 10px 5px;
+            }
+
+            .countdown-item span:first-child {
+                font-size: 1.8em;
+            }
+
+            .message-box {
+                font-size: 1rem;
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>¡Nos vamos a Cartagena!</h1>
+        <div class="palm-emoji">🌴</div>
+        <div class="countdown">
+            <div class="countdown-item">
+                <span id="days">00</span>
+                <span class="countdown-label">Días</span>
+            </div>
+            <div class="countdown-item">
+                <span id="hours">00</span>
+                <span class="countdown-label">Horas</span>
+            </div>
+            <div class="countdown-item">
+                <span id="minutes">00</span>
+                <span class="countdown-label">Min</span>
+            </div>
+            <div class="countdown-item">
+                <span id="seconds">00</span>
+                <span class="countdown-label">Seg</span>
+            </div>
+        </div>
+        <div class="message-box">
+            ¡Alisten sus maletas que ya está llegando el día de volar! ✈️
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            const targetDate = new Date('December 12, 2024 00:00:00').getTime();
+            
+            function update() {
+                const now = new Date().getTime();
+                const difference = targetDate - now;
+                
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = days.toString().padStart(2, '0');
+                document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+                
+                if (difference < 0) {
+                    clearInterval(interval);
+                    document.querySelector('.countdown').innerHTML = '<h2>¡Ya estamos en Cartagena! 🎉</h2>';
+                }
+            }
+            
+            update();
+            const interval = setInterval(update, 1000);
+        }
+
+        document.addEventListener('DOMContentLoaded', updateCountdown);
+    </script>
+</body>
+</html>
